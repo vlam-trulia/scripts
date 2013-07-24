@@ -1,0 +1,6 @@
+.DS_Store
+smarty_cache/*
+dev_local.conf
+.buildpath
+.project
+.settings/*
