@@ -7,6 +7,7 @@ define('HTTP_DOCROOT', '/data/home/nroberts/public_html');
 define('PHPEXCEL_INCLUDE_PATH', HTTP_DOCROOT.'/PHPExcel');
 define('WEBSERVICE_INCLUDE_PATH', HTTP_DOCROOT. '/webservice');
 define('SCRIPTS_INCLUDE_PATH', HTTP_DOCROOT.'/scripts');
+define('IMPORT_PATH', SCRIPTS_INCLUDE_PATH.'/import');
 
 require_once(WEBSERVICE_INCLUDE_PATH.'/bootstrap.php');
 require_once(PHPEXCEL_INCLUDE_PATH.'/PHPExcel.php');
@@ -22,7 +23,7 @@ $vendor_image_marker = 'mkr_chase_white.png';
 
 echo("Generating SQL for $vendor...\n");
 
-$input_filename = SCRIPTS_INCLUDE_PATH . '/API-820/Trulia_PROD_0604.xlsx';
+$input_filename = IMPORT_PATH . '/Trulia_PROD_0604.xlsx';
 echo("XLS file to use: $input_filename\n");
 
 
