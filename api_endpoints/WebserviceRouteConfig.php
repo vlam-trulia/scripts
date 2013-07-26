@@ -1,8 +1,6 @@
 <?php
 /**
- * The endpoints in the webservice .htaccess file that we are cataloguing are all in this format:
- *
- * RewriteRule ^admarker/v1/search   dispatcher.php?_module=AdMarkerV1Search [L,QSA]
+ * Loads the .htaccess file and parses each route into a list.
  * 
  */
 
@@ -39,7 +37,7 @@ class WebserviceRouteConfig
     
     self::$routes = array();
     
-    foreach($config as $config_rule)
+    foreach($config as $line_number => $config_rule)
     {
       
       $config_rule = trim($config_rule);
@@ -50,7 +48,7 @@ class WebserviceRouteConfig
       
       try
       {
-        self::$routes[] = new WebserviceRoute($config_rule);
+        self::$routes[] = new WebserviceRoute($config_rule, $line_number);
       }
       catch(Exception $e)
       {
