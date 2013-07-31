@@ -14,8 +14,14 @@ require_once(PHPEXCEL_INCLUDE_PATH.'/PHPExcel.php');
 require_once(WEBSERVICE_INCLUDE_PATH.'/include/MapMarkerAd.php');
 require_once(COMMON_INCLUDE_PATH.'/Geo/GeocoderAddressUtils.php');
 
+// ticket to use in comments field
+$jiraTicket = 'API-891';
 
+// file to output to
+$timestamp = date('Ymd');
+$outfile = '/tmp/' . sprintf('mapmarkerad_update_%s.%s.sql', $vendor, $timestamp);
 
+// you shouldn't need to modify these lines as they won't change
 $vendor = 'chase';
 $vendor_label = 'Chase';
 $vendor_template = 'chase';
@@ -118,16 +124,22 @@ foreach ($CurrentSheet->getRowIterator() as $Row)
 
 echo("Generating SQL file...\n");
 
-$timestamp = date('Ymd');
-$outfile = '/tmp/' . sprintf('mapmarkerad_update_%s.%s.sql', $vendor, $timestamp);
+$sql = "
+SELECT \"Running SQL update for $jiraTicket.\", NOW();
+
+USE `Mobile`;
+DELETE FROM `MapMarkerAd` WHERE LOWER(`label`) = 'chase';    
+";
+
+$lineDelim = ";\n";
+$sql .= implode($lineDelim, $insertSqlStatements) . $lineDelim;
+
 
 if(file_exists($outfile))
 {
   unlink($outfile);
 }
 
-
-$sql = implode(";\n", $insertSqlStatements);
 
 $fh = fopen($outfile, 'w');
 fwrite($fh, $sql);
